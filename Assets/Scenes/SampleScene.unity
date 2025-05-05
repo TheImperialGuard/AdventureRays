@@ -593,6 +593,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1669380615}
+  _explosionRadius: 5
+  _explosionForce: 2
+  _explosionMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &871832174
 Transform:
   m_ObjectHideFlags: 0
