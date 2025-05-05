@@ -13,7 +13,7 @@ public class Box : MonoBehaviour, IDragable
         _dragAndDrop = new DragAndDrop(transform, _dragMask, _dragOffset);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_dragAndDrop.IsDragging)
             _dragAndDrop.Drag();
