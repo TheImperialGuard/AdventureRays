@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class InteractEffect : IShootEffect
+public class DragAndDropEffect : IShootEffect
 {
     public void Execute(Vector3 hitPoint, Collider collider)
     {
-        IInteractable target = collider.GetComponent<IInteractable>();
+        IDragable target = collider.GetComponent<IDragable>();
 
         if (target != null)
         {
-            target.Interact();
+            target.SwitchDragging();
         }
     }
 }

@@ -1,35 +1,35 @@
 using UnityEngine;
 
-public class DragAndDrop : IInteractable
+public class DragAndDrop
 {
     private Transform _source;
-    private Transform _cursor;
 
-    private bool _isDragging = false;
+    private LayerMask _gridMask;
 
-    public DragAndDrop(Transform source, Transform cursore)
+    private float _yOffset;
+
+    public DragAndDrop(Transform source, LayerMask gridMask, float yOffset)
     {
         _source = source;
-        _cursor = cursore;
+        _gridMask = gridMask;
+        _yOffset = yOffset;
     }
 
-    public void Interact()
-    {
-        _isDragging = !_isDragging;
+    public bool IsDragging { get; private set; }
 
-        if (_isDragging)
-            Drag();
-        else
-            Drop();
-    }
+    public void SwitchDragging() => IsDragging = !IsDragging;
 
-    private void Drop()
+    public void Drag()
     {
-        _source.SetParent(null);
-    }
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-    private void Drag()
-    {
-        _source.SetParent(_cursor);
+        if (Physics.Raycast(cameraRay, out RaycastHit hit, Mathf.Infinity, _gridMask))
+        {
+            Vector3 dragPosition = new Vector3(hit.point.x, hit.point.y + _yOffset, hit.point.z);
+
+            _source.position = dragPosition;
+
+            Debug.Log(hit.point);
+        }
     }
 }

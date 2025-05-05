@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : MonoBehaviour, IInteractable
+public class Box : MonoBehaviour, IDragable
 {
-    private IInteractable _interactable;
+    [SerializeField] private LayerMask _dragMask;
 
-    public void Inizialize(IInteractable interactable)
+    [SerializeField] private float _dragOffset;
+
+    private DragAndDrop _dragAndDrop;
+
+    private void Awake()
     {
-        _interactable = interactable;
+        _dragAndDrop = new DragAndDrop(transform, _dragMask, _dragOffset);
     }
 
-    public void Interact()
+    private void Update()
     {
-        _interactable.Interact();
+        if (_dragAndDrop.IsDragging)
+            _dragAndDrop.Drag();
     }
+
+    public void SwitchDragging() => _dragAndDrop.SwitchDragging();
 }
